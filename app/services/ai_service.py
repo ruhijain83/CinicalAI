@@ -32,3 +32,25 @@ def ask_ai(question: str) -> ChatResponse:
     return ChatResponse(
         answer=response.output_text
     )
+
+
+def ask_with_context(question: str, context: str):
+
+    prompt = f"""
+    You are a clinical assistant.
+
+    Use ONLY the information below to answer.
+
+    Context:
+    {context}
+
+    Question:
+    {question}
+    """
+
+    response = client.responses.create(
+        model=AI_MODEL,
+        input=prompt
+    )
+
+    return response.output_text
