@@ -1,0 +1,24 @@
+Pneumonia
+
+Pneumonia is an infection of the lungs.
+
+Symptoms include:
+
+- Fever
+- Chills
+- Cough
+- Shortness of breath
+
+Treatment usually includes antibiotics if bacterial.
+
+MRI
+
+MRI uses strong magnetic fields.
+
+MRI does not use ionizing radiation.
+
+Hypertension
+
+Hypertension is persistently elevated blood pressure.
+
+Patients should monitor blood pressure regularly.

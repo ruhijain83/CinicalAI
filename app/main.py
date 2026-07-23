@@ -1,7 +1,9 @@
 from fastapi import FastAPI
-from app.models import Patient, ChatRequest, ChatResponse
+from app.models.chat_models import Patient, ChatRequest, ChatResponse
 from app.services.user_service import get_user
 from app.services.ai_service import ask_ai
+from app.api.document_api import router as document_router
+from app.api.chat_api import router as chat_router
 
 app = FastAPI()
 
@@ -34,6 +36,7 @@ def user():
 
     return get_user()
 
-@app.post("/chat", response_model=ChatResponse)
-def chat(request: ChatRequest) -> ChatResponse:
-    return ask_ai(request.question)
+
+app.include_router(document_router)
+app.include_router(chat_router)
+

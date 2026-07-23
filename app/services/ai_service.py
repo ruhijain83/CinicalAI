@@ -1,31 +1,20 @@
-from openai import OpenAI
+from app.clients.openai_client import client
+from app.prompts.clinical_prompt import SYSTEM_PROMPT
+from app.prompts.clinical_prompt import RAG_PROMPT
+
 
 from app.config import (
-    AI_FOUNDRY_ENDPOINT,
-    AI_FOUNDRY_KEY,
-    AI_MODEL,
+    AI_MODEL
 )
 
-from app.models import ChatResponse
+from app.models.chat_models import ChatResponse
 
-client = OpenAI(
-    base_url=AI_FOUNDRY_ENDPOINT,
-    api_key=AI_FOUNDRY_KEY,
-)
 
 def ask_ai(question: str) -> ChatResponse:
 
     response = client.responses.create(
         model=AI_MODEL,
-         instructions="""
-            You are an experienced clinical AI assistant.
-
-            Rules:
-            - Explain medical terms in simple language.
-            - Never invent patient information.
-            - If uncertain, say you are uncertain.
-            - Do not replace professional medical advice.
-            """,
+         instructions=SYSTEM_PROMPT,
         input=question
     )
 
@@ -36,21 +25,15 @@ def ask_ai(question: str) -> ChatResponse:
 
 def ask_with_context(question: str, context: str):
 
-    prompt = f"""
-    You are a clinical assistant.
-
-    Use ONLY the information below to answer.
-
-    Context:
-    {context}
-
-    Question:
-    {question}
-    """
-
-    response = client.responses.create(
+   prompt = RAG_PROMPT.format(
+        context=context,
+        question=question
+    )
+   
+   response = client.responses.create(
         model=AI_MODEL,
+        instructions=SYSTEM_PROMPT,
         input=prompt
     )
-
-    return response.output_text
+   
+   return response.output_text

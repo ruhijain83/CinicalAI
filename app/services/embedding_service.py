@@ -1,17 +1,12 @@
-from openai import OpenAI
+from app.clients.openai_client import client
 
 from app.config import (
-    AI_FOUNDRY_ENDPOINT,
-    AI_FOUNDRY_KEY,
     EMBEDDING_MODEL
 )
 
-client = OpenAI(
-    base_url=AI_FOUNDRY_ENDPOINT,
-    api_key=AI_FOUNDRY_KEY,
-)
 
-def create_embedding(text: str):
+def create_embedding(text: str) -> list[float]:
+    """Generate an embedding for the given text."""
     response = client.embeddings.create(
         model=EMBEDDING_MODEL,
         input=text
