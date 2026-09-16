@@ -4,6 +4,7 @@ from app.models.document_models import (
     UploadDocumentResponse
 )
 from app.rag.ingestion import ingest
+from app.rag.pipeline import ask
 
 
 router = APIRouter(
